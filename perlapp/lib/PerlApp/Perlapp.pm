@@ -49,11 +49,13 @@ sub _connect_to_db {
 	$logger->info("Connected to the database");
 }
 
+# to translate
 sub getTnbList
 {
 	my ($self, $json) = @_;
 	my $param = $json->{params};
 
+	# TNB = "Teilnehmernetzbetreiber"
 	$logger->info("Fetching TNB list from the database");
 	my $sth = $db->prepare("SELECT * FROM tnbs");
 	$sth->execute();
@@ -67,6 +69,8 @@ sub getTnbList
 		$sth->execute($number);
 		($tnb, undef) = $sth->fetchrow_array();
 	}
+
+	# $tnb ist  
 
 	my @tnbs;
 	push(@tnbs, {tnb => "D001", name => "Deutsche Telekom", isTnb => (defined $tnb && $tnb eq "D001" ? JSON::true : JSON::false)});
